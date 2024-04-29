@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 const jwt = require("jsonwebtoken");
 
 mongoose
-  .connect("", {
+  .connect("mongodb+srv://abdul:mongoisbest@cluster0.jnzmguj.mongodb.net/", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -67,8 +67,8 @@ const sendVerificationEmail = async (email, verificationToken) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "sujananand0@gmail.com",
-      pass: "",
+      user: "rasoolas2003@gmail.com",
+      pass: "nocp ljvv iofl hnzy",
     },
   });
 
