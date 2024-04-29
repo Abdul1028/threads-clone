@@ -279,6 +279,17 @@ app.get("/get-posts", async (req, res) => {
   }
 });
 
+//endpoint to get all the posts
+app.get("/", async (req, res) => {
+  try {
+    res.status(200).json({message:"Hello world"});
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "An error occurred while getting the posts" });
+  }
+});
+
 app.get("/profile/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
