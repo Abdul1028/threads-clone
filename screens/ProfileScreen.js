@@ -13,7 +13,7 @@ const ProfileScreen = () => {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/profile/${userId}`
+          `https://threads-backend-api.vercel.app/profile/${userId}`
         );
         const { user } = response.data;
         setUser(user);

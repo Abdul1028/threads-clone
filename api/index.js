@@ -77,7 +77,7 @@ const sendVerificationEmail = async (email, verificationToken) => {
     from: "threads.com",
     to: email,
     subject: "Email Verification",
-    text: `please click the following link to verify your email http://localhost:3000/verify/${verificationToken}`,
+    text: `please click on the following link to verify your email https://threads-backend-api.vercel.app/verify/${verificationToken} Thanks from Threads and Team for your creation of account!`,
   };
 
   try {

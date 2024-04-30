@@ -28,7 +28,7 @@ const ActivityScreen = () => {
       setUserId(userId);
 
       axios
-        .get(`http://localhost:3000/user/${userId}`)
+        .get(`https://threads-backend-api.vercel.app/user/${userId}`)
         .then((response) => {
           setUsers(response.data);
         })

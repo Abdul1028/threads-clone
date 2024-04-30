@@ -29,7 +29,7 @@ const RegisterScreen = () => {
     };
 
     axios
-      .post("http://localhost:3000/register", user)
+      .post("https://threads-backend-api.vercel.app/"+ "register", user)
       .then((response) => {
         console.log(response);
         Alert.alert(

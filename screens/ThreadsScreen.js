@@ -24,7 +24,7 @@ const ThreadsScreen = () => {
     }
 
     axios
-      .post("http://localhost:3000/create-post", postData)
+      .post("https://threads-backend-api.vercel.app/"+"create-post", postData)
       .then((response) => {
         setContent("");
       })

@@ -34,7 +34,7 @@ const HomeScreen = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/get-posts");
+      const response = await axios.get("https://threads-backend-api.vercel.app/"+"get-posts");
       setPosts(response.data);
     } catch (error) {
       console.log("error fetching posts", error);
@@ -45,7 +45,7 @@ const HomeScreen = () => {
   const handleLike = async (postId) => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/posts/${postId}/${userId}/like`
+        `https://threads-backend-api.vercel.app/posts/${postId}/${userId}/like`
       );
       const updatedPost = response.data;
 
@@ -62,7 +62,7 @@ const HomeScreen = () => {
   const handleDislike = async (postId) => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/posts/${postId}/${userId}/unlike`
+        `https://threads-backend-api.vercel.app/posts/${postId}/${userId}/unlike`
       );
       const updatedPost = response.data;
       // Update the posts array with the updated post

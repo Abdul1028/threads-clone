@@ -44,7 +44,7 @@ const LoginScreen = () => {
     };
 
     axios
-      .post("http://localhost:3000/login", user)
+      .post("https://threads-backend-api.vercel.app/" + "login", user)
       .then((response) => {
         console.log(response);
         const token = response.data.token;
