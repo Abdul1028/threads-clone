@@ -8,6 +8,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
+import {CommentModal} from "../components/CommentModal";
 
 const HomeScreen = () => {
   const { userId, setUserId } = useContext(UserType);
@@ -32,9 +33,25 @@ const HomeScreen = () => {
     }, [])
   );
 
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleCommentSubmit = (content) => {
+    // Submit the comment to the backend or handle as needed
+    console.log('Submitted comment:', content);
+  };
+
+
   const fetchPosts = async () => {
     try {
-      const response = await axios.get("https://threads-backend-api.vercel.app/"+"get-posts");
+      const response = await axios.get("https://threads-backend-api.vercel.app/" + "get-posts");
       setPosts(response.data);
     } catch (error) {
       console.log("error fetching posts", error);
@@ -69,13 +86,34 @@ const HomeScreen = () => {
       const updatedPosts = posts.map((post) =>
         post._id === updatedPost._id ? updatedPost : post
       );
-      console.log("updated ",updatedPosts)
-    
+      console.log("updated ", updatedPosts)
+
       setPosts(updatedPosts);
     } catch (error) {
       console.error("Error unliking post:", error);
     }
   };
+
+  const handleComment = async (postId, content) => {
+
+    // try {
+    //   const response = await axios.post(`https://localhost:3000/${postId}/comment`, {
+    //     userId: userId,
+    //     content: content
+    //   });
+
+    //   if (response.status === 201) {
+    //     console.log("Comment added successfully");
+    //   } else {
+    //     console.error("Failed to add comment:", response.data.message);
+    //   }
+    // } catch (error) {
+    //   console.error("Error adding comment:", error);
+    // }
+
+  };
+
+
   return (
     <ScrollView style={{ marginTop: 50, flex: 1, backgroundColor: "white" }}>
       <View style={{ alignItems: "center", marginTop: 20 }}>
@@ -148,6 +186,11 @@ const HomeScreen = () => {
                 <FontAwesome name="comment-o" size={18} color="black" />
 
                 <Ionicons name="share-social-outline" size={18} color="black" />
+
+
+                {/* Modal */}
+                <CommentModal visible={showModal} onClose={handleCloseModal} onSubmit={handleCommentSubmit} />
+
               </View>
 
               <Text style={{ marginTop: 7, color: "gray" }}>

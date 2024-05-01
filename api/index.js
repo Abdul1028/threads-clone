@@ -264,6 +264,42 @@ app.put("/posts/:postId/:userId/unlike", async (req, res) => {
   }
 });
 
+
+//endpoint to comment 
+
+app.post("/comment/:postID",async(req,res) => {
+  try {
+    const postId = req.params.postID;
+    const { userId, content } = req.body;
+
+    // Check if the post exists
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    // Create a new comment
+    const newComment = {
+      user: userId,
+      content: content,
+      createdAt: new Date(),
+    };
+
+    // Add the comment to the post's comments array
+    post.replies.push(newComment);
+
+    // Save the updated post
+    await post.save();
+
+    res.status(201).json({ message: "Comment added successfully" });
+  } catch (error) {
+    console.error("Error adding comment:", error);
+    res.status(500).json({ message: "Failed to add comment" });
+  }
+});
+
+
+
 //endpoint to get all the posts
 app.get("/get-posts", async (req, res) => {
   try {
@@ -305,3 +341,8 @@ app.get("/profile/:userId", async (req, res) => {
     res.status(500).json({ message: "Error while getting the profile" });
   }
 });
+
+
+app.get("/",async() => {
+  res.json("heyy threads is working!!!!")
+})
