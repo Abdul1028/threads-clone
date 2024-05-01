@@ -8,7 +8,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
-import {CommentModal} from "../components/CommentModal";
+import CommentModal from "../components/CommentModal";
 
 const HomeScreen = () => {
   const { userId, setUserId } = useContext(UserType);
@@ -189,7 +189,9 @@ const HomeScreen = () => {
 
 
                 {/* Modal */}
-                <CommentModal visible={showModal} onClose={handleCloseModal} onSubmit={handleCommentSubmit} />
+                {/* <CommentModal visible={showModal} onClose={handleCloseModal} onSubmit={handleCommentSubmit} /> */}
+
+                <CommentModal visible = {showModal} onClose = {handleCloseModal} onSubmit = {handleCommentSubmit} />
 
               </View>
 
