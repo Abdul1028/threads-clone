@@ -10,9 +10,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
 import CommentModal from "../components/CommentModal";
 
+
 const HomeScreen = () => {
   const { userId, setUserId } = useContext(UserType);
   const [posts, setPosts] = useState([]);
+  const [selectedPost, setSelectedPost] = useState(null);
+
   useEffect(() => {
     const fetchUsers = async () => {
       const token = await AsyncStorage.getItem("authToken");
@@ -35,17 +38,22 @@ const HomeScreen = () => {
 
   const [showModal, setShowModal] = useState(false);
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (post) => {
     setShowModal(true);
+    setSelectedPost(post)
+
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
   };
 
-  const handleCommentSubmit = (content) => {
+  const handleCommentSubmit = (content,id) => {
     // Submit the comment to the backend or handle as needed
-    console.log('Submitted comment:', content);
+    console.log('Submittedf comment:', content);
+    handleComment(id,content);
+    console.log("Done submitting")
+
   };
 
 
@@ -96,20 +104,20 @@ const HomeScreen = () => {
 
   const handleComment = async (postId, content) => {
 
-    // try {
-    //   const response = await axios.post(`https://localhost:3000/${postId}/comment`, {
-    //     userId: userId,
-    //     content: content
-    //   });
+    try {
+      const response = await axios.post(`https://threads-backend-api.vercel.app/comment/${postId}`, {
+        userId: userId,
+        content: content
+      });
 
-    //   if (response.status === 201) {
-    //     console.log("Comment added successfully");
-    //   } else {
-    //     console.error("Failed to add comment:", response.data.message);
-    //   }
-    // } catch (error) {
-    //   console.error("Error adding comment:", error);
-    // }
+      if (response.status === 201) {
+        console.log("Comment added successfully");
+      } else {
+        console.error("Failed to add comment:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error adding comment:", error);
+    }
 
   };
 
@@ -183,15 +191,15 @@ const HomeScreen = () => {
                   />
                 )}
 
-                <FontAwesome name="comment-o" size={18} color="black" />
+                <FontAwesome name="comment-o" onPress={()=> handleOpenModal(post) } size={18} color="black" />
 
-                <Ionicons name="share-social-outline" size={18} color="black" />
+                <Ionicons name="share-social-outline"  size={18} color="black" />
 
 
                 {/* Modal */}
                 {/* <CommentModal visible={showModal} onClose={handleCloseModal} onSubmit={handleCommentSubmit} /> */}
 
-                <CommentModal visible = {showModal} onClose = {handleCloseModal} onSubmit = {handleCommentSubmit} />
+                <CommentModal post = {selectedPost} visible = {showModal} onClose = {handleCloseModal} onSubmit = {handleCommentSubmit} />
 
               </View>
 
@@ -204,7 +212,7 @@ const HomeScreen = () => {
       </View>
     </ScrollView>
   );
-};
+}; 
 
 export default HomeScreen;
 

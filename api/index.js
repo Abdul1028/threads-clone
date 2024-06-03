@@ -318,7 +318,7 @@ app.get("/get-posts", async (req, res) => {
 //endpoint to get all the posts
 app.get("/", async (req, res) => {
   try {
-    res.status(200).json({message:"Hello world"});
+    res.status(200).json({message:"V2 Server is up and running !!!!!"});
   } catch (error) {
     res
       .status(500)
@@ -342,7 +342,3 @@ app.get("/profile/:userId", async (req, res) => {
   }
 });
 
-
-app.get("/",async() => {
-  res.json("heyy threads is working!!!!")
-})

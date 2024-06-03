@@ -4,23 +4,67 @@ import {
   View,
   Image,
   SafeAreaView,
+  TouchableWithoutFeedback,
   TextInput,
   Button,
+  Alert,
+  Keyboard,
 } from "react-native";
-import React, { useState, useContext } from "react";
+import React, { useState,useEffect,useContext } from "react";
 import { UserType } from "../UserContext";
+import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
+import { keyboardProps } from "react-native-web/dist/cjs/modules/forwardedProps";
+
 
 const ThreadsScreen = () => {
+  const navigation = useNavigation();
   const { userId, setUserId } = useContext(UserType);
   const [content, setContent] = useState("");
+  const [user,setUser] = useState("");
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.get(
+          `https://threads-backend-api.vercel.app/profile/${userId}`
+        );
+        const { user } = response.data;
+        setUser(user);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    fetchProfile();
+  });
+
+
+
+
   const handlePostSubmit = () => {
     const postData = {
       userId,
     };
 
+
+
+
+
     if (content) {
-      postData.content = content;
+
+      if (content.trim() === ""){
+        Alert.alert("Empty","please enter some thread!!")
+      }
+      else{
+        postData.content = content;
+        Alert.alert("Success","Thread posted");
+        Keyboard.dismiss();
+      }
+
+    }
+    else{
+      Alert.alert("Empty","please enterr some thread!!")
     }
 
     axios
@@ -33,7 +77,7 @@ const ThreadsScreen = () => {
       });
   };
   return (
-    <SafeAreaView style={{ padding: 10 }}>
+    <SafeAreaView style={{ padding:10,marginTop:20 }} >
       <View
         style={{
           flexDirection: "row",
@@ -48,22 +92,24 @@ const ThreadsScreen = () => {
             height: 40,
             borderRadius: 20,
             resizeMode: "contain",
+            marginLeft:5
           }}
           source={{
             uri: "https://cdn-icons-png.flaticon.com/128/149/149071.png",
           }}
         />
 
-        <Text>Sujan_Music</Text>
+        <Text style={{padding:10, fontSize:18 ,fontWeight:"bold", margin:8, paddingLeft:0}}  >{user?.name}</Text>
       </View>
 
-      <View style={{ flexDirection: "row", marginLeft: 10 }}>
+      <View style={{ width:"100%",flexDirection: "row", marginLeft: 10 }}>
         <TextInput
           value={content}
           onChangeText={(text) => setContent(text)}
           placeholderTextColor={"black"}
           placeholder="Type your message..."
           multiline
+          numberOfLines={3}
         />
       </View>
 

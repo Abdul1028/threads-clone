@@ -9,6 +9,7 @@ const ProfileScreen = () => {
   const [user, setUser] = useState("");
   const navigation = useNavigation()
   const { userId, setUserId } = useContext(UserType);
+
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -98,7 +99,7 @@ const ProfileScreen = () => {
               borderRadius: 5,
             }}
           >
-            <Text>Edit Profile</Text>
+            <Text  >Edit Profile</Text>
           </Pressable>
 
           <Pressable

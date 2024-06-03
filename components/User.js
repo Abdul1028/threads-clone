@@ -51,7 +51,7 @@ const User = ({ item }) => {
   }, [userId, item]);
   return (
     <View>
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 10 ,padding:3}}>
         <Image
           style={{
             width: 40,
